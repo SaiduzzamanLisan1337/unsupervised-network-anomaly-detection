@@ -1,0 +1,30 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+env/
+.env
+.DS_Store
+.idea/
+.vscode/
+*.egg-info/
+
+# Generated experiments
+artifacts/*
+reports/*
+!artifacts/.gitkeep
+!reports/.gitkeep
+
+# Large/local datasets
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# Local logs / caches
+*.log
+*.tmp
+!data/raw/README.md

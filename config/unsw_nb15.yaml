@@ -1,0 +1,45 @@
+seed: 42
+
+# UNSW-NB15 uses 0 for normal and 1 for attack in the 49-column CSV schema.
+label_column: label
+benign_label: "0"
+
+# Leakage-aware exclusions.
+# srcip/dstip are endpoint identifiers; attack_cat is the attack-family target.
+id_columns: []
+drop_columns:
+  - srcip
+  - dstip
+  - attack_cat
+feature_columns: []
+missing_value_strategy: median
+
+test_size: 0.20
+validation_size: 0.20
+
+model:
+  latent_dim: 16
+  hidden_dims: [256, 128, 64]
+  dropout: 0.10
+  noise_std: 0.05
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  batch_size: 512
+  max_epochs: 60
+  patience: 10
+  gradient_clip_norm: 5.0
+
+threshold:
+  mode: normal_quantile
+  quantile: 0.995
+
+isolation_forest:
+  n_estimators: 300
+  max_samples: auto
+  contamination: auto
+  n_jobs: -1
+
+runtime:
+  device: auto
+  num_workers: 0
+  inference_batch_size: 8192

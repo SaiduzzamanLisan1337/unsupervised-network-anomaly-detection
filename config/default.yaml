@@ -1,0 +1,44 @@
+seed: 42
+
+# Dataset
+label_column: label
+benign_label: normal
+id_columns:
+  - flow_id
+drop_columns: []
+feature_columns: []
+missing_value_strategy: median
+
+# Split proportions. The test set is created first; validation is then taken from the remainder.
+test_size: 0.20
+validation_size: 0.20
+
+# Denoising Autoencoder
+model:
+  latent_dim: 12
+  hidden_dims: [128, 64, 32]
+  dropout: 0.15
+  noise_std: 0.05
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  batch_size: 256
+  max_epochs: 50
+  patience: 8
+  gradient_clip_norm: 5.0
+
+# Threshold is learned only from benign validation reconstruction errors.
+threshold:
+  mode: normal_quantile
+  quantile: 0.995
+
+# Classical unsupervised baseline.
+isolation_forest:
+  n_estimators: 400
+  max_samples: auto
+  contamination: auto
+  n_jobs: -1
+
+runtime:
+  device: auto
+  num_workers: 0
+  inference_batch_size: 8192
